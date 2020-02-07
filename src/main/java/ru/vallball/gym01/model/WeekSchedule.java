@@ -22,7 +22,7 @@ public class WeekSchedule {
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "sportsman_id")
 	private Sportsman sportsman;
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "schedule_id")
 	private Set<TrainingDay> days;
 	
