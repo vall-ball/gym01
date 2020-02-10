@@ -1,5 +1,6 @@
 package ru.vallball.gym01.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -21,6 +22,7 @@ import ru.vallball.gym01.model.TrainingDay;
 import ru.vallball.gym01.model.WeekSchedule;
 import ru.vallball.gym01.service.DayService;
 import ru.vallball.gym01.service.ScheduleService;
+import ru.vallball.gym01.utils.ExcelUtil;
 
 @RestController
 @RequestMapping(value = "/weeks", produces = "application/json;charset=UTF-8")
@@ -70,5 +72,19 @@ public class ScheduleRestController {
 		return new ResponseEntity<>("Week is deleted successfully", HttpStatus.ACCEPTED);
 	}
 
+	@GetMapping("/prog/{id}")
+	public ResponseEntity<Object> createFile(@PathVariable(value = "id") Long id){
+		WeekSchedule week = scheduleService.findById(id);
+		ExcelUtil util = new ExcelUtil();
+		try {
+			util.writeData(week);
+			return new ResponseEntity<>("Your schedule is ready", HttpStatus.ACCEPTED);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity<>("WTF!!!", HttpStatus.BAD_REQUEST);
+		}
+		
+	}
 }
 

@@ -51,6 +51,7 @@ public class DayRestController {
 		try {
 			TrainingDay dayForUpdate = dayService.findById(id);
 			dayForUpdate.setBlocks(day.getBlocks());
+			dayForUpdate.setDayOfWeek(day.getDayOfWeek());
 			dayService.save(dayForUpdate);
 		} catch (NoSuchElementException e) {
 			return new ResponseEntity<>("Day not found", HttpStatus.BAD_REQUEST);
